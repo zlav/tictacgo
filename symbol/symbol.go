@@ -6,21 +6,13 @@ type Symbol struct {
 	char string
 }
 
-func NewSymbol() Symbol {
-	return Symbol{char: " "}
-}
-
-func (s Symbol) Reset() {
-	s.char = " "
+func NewSymbol(c string) Symbol {
+	return Symbol{char: c}
 }
 
 // TODO: Correct error return
-func (s Symbol) Set(val string) bool {
-	if len(val) == 1 {
-		s.char = val
-		return true
-	}
-	return false
+func (s *Symbol) Set(val string) {
+	s.char = val
 }
 
 func (s Symbol) Get() string {

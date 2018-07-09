@@ -1,27 +1,35 @@
 package cell
 
-import "github.com/zlav/tictacgo/symbol"
+import (
+	"github.com/zlav/tictacgo/symbol"
+)
 
-type cell struct {
+const defaultSym = " "
+
+type Cell struct {
 	value symbol.Symbol
 }
 
-func NewCell() cell {
-	return cell{value: symbol.NewSymbol()}
+func NewCell() Cell {
+	return Cell{value: symbol.NewSymbol(defaultSym)}
 }
 
-func (c cell) Set(newVal string) {
-	c.value.Set(newVal)
+func (c *Cell) Set(newSym symbol.Symbol) bool {
+	if c.value.Get() != defaultSym {
+		return false
+	}
+	c.value.Set(newSym.Get())
+	return true
 }
 
-func (c cell) GetValue() symbol.Symbol {
+func (c Cell) GetValue() symbol.Symbol {
 	return c.value
 }
 
-func (c cell) Print() {
+func (c Cell) Print() {
 	c.value.Print()
 }
 
-func (c cell) Reset() {
-	c.value.Reset()
+func (c *Cell) Reset() {
+	c.value.Set(defaultSym)
 }
