@@ -1,22 +1,32 @@
-package main
+package symbol
 
-type symbol struct {
+import "fmt"
+
+type Symbol struct {
 	char string
 }
 
-func NewSymbol() symbol {
-	return symbol{char: " "}
+func NewSymbol() Symbol {
+	return Symbol{char: " "}
 }
 
-func (s symbol) ResetSymbol() {
+func (s Symbol) Reset() {
 	s.char = " "
 }
 
 // TODO: Correct error return
-func (s symbol) SetSymbol(val string) bool {
+func (s Symbol) Set(val string) bool {
 	if len(val) == 1 {
 		s.char = val
 		return true
 	}
 	return false
+}
+
+func (s Symbol) Get() string {
+	return s.char
+}
+
+func (s Symbol) Print() {
+	fmt.Print(s.char)
 }

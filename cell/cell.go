@@ -1,11 +1,27 @@
-package main
+package cell
 
-import "fmt"
+import "github.com/zlav/tictacgo/symbol"
 
 type cell struct {
-	sym symbol
+	value symbol.Symbol
 }
 
-func main() {
-	fmt.Println("vim-go")
+func NewCell() cell {
+	return cell{value: symbol.NewSymbol()}
+}
+
+func (c cell) Set(newVal string) {
+	c.value.Set(newVal)
+}
+
+func (c cell) GetValue() symbol.Symbol {
+	return c.value
+}
+
+func (c cell) Print() {
+	c.value.Print()
+}
+
+func (c cell) Reset() {
+	c.value.Reset()
 }
