@@ -9,7 +9,6 @@ import (
 
 func main() {
 	fmt.Printf("Welcome to Tic Tac Go\n")
-	game := board.NewGame()
 
 	var players []player.Player
 	setup := false
@@ -31,6 +30,7 @@ func main() {
 		}
 	}
 
+	game := board.NewGame(players[0].GetIcon(), players[1].GetIcon())
 	fmt.Printf("Here is an example of how to place a token on the grid\n")
 	game.PrintHelp()
 	fmt.Printf("Good Luck!\n")

@@ -10,6 +10,7 @@ import (
 
 type Player interface {
 	GetName() string
+	GetIcon() symbol.Symbol
 	PlayTicTacToe(*board.Tictacboard)
 }
 
@@ -57,4 +58,12 @@ func (h human) GetName() string {
 
 func (c computer) GetName() string {
 	return c.name
+}
+
+func (h human) GetIcon() symbol.Symbol {
+	return h.icon
+}
+
+func (c computer) GetIcon() symbol.Symbol {
+	return c.icon
 }

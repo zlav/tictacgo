@@ -26,6 +26,13 @@ func (c Cell) GetValue() symbol.Symbol {
 	return c.value
 }
 
+func (c Cell) IsSet() bool {
+	if c.value.Get() == defaultSym {
+		return false
+	}
+	return true
+}
+
 func (c Cell) Print() {
 	c.value.Print()
 }
