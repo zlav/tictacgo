@@ -41,7 +41,7 @@ func (h human) PlayTicTacToe(board *board.Tictacboard) {
 	validPlay := false
 	for !validPlay {
 		var input int
-		fmt.Scanf("%d", &input)
+		fmt.Scanf("%d %s %s %s", &input)
 		validPlay = board.Play(input, h.icon)
 	}
 }

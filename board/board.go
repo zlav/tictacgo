@@ -31,8 +31,7 @@ func NewGame(one symbol.Symbol, two symbol.Symbol) *Tictacboard {
 func (board Tictacboard) PrintBoard() {
 	for r, row := range board.grid {
 		for _, box := range row {
-			fmt.Print("|")
-			box.Print()
+			fmt.Printf("|%s", box.GetValue().Get())
 		}
 		fmt.Print("|")
 		if r < 2 {
