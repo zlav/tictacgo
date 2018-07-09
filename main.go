@@ -31,7 +31,7 @@ func main() {
 	}
 
 	game := board.NewGame(players[0].GetIcon(), players[1].GetIcon())
-	fmt.Printf("Here is an example of how to place a token on the grid\n")
+	fmt.Printf("Here is an example of how to select a box on the grid\n")
 	game.PrintHelp()
 	fmt.Printf("Good Luck!\n")
 
@@ -42,10 +42,11 @@ func main() {
 				game.PrintBoard()
 				player.PlayTicTacToe(game)
 				if game.IsDraw() {
+					fmt.Printf("Draw! Nobody is a winner\n")
 					break
 				}
 				if game.IsWon() {
-					fmt.Printf("Congrats to %s!\n", player.GetName())
+					fmt.Printf("Congrats to Player %s!\n", player.GetIcon().Get())
 					game.PrintBoard()
 					break
 				}
@@ -61,7 +62,7 @@ func main() {
 }
 
 func playAgain() bool {
-	fmt.Printf("Play again? Y/N\n")
+	fmt.Printf("Play again? Yes/No\n")
 	input := ""
 	fmt.Scanf("%s", &input)
 	return input[0] == 'y' || input[0] == 'Y'

@@ -97,7 +97,7 @@ func (board *Tictacboard) BestPlay(s symbol.Symbol) int {
 	bestMove := -1
 
 	opponent := board.players[0]
-	if board.players[0].Get() == s.Get() {
+	if board.players[0] == s {
 		opponent = board.players[1]
 	}
 
@@ -115,49 +115,47 @@ func (board *Tictacboard) BestPlay(s symbol.Symbol) int {
 
 			if moveVal > bestVal {
 				bestMove = i
-				fmt.Printf("Best Move: %d and score %d\n", bestMove, moveVal)
 				bestVal = moveVal
 			}
 		}
 	}
-	fmt.Printf("Best Move is %d\n", bestMove)
 
 	return bestMove + 1
 }
 
-func evaluate(board *Tictacboard, player symbol.Symbol, opponent symbol.Symbol) int {
+func evaluateGrid(board *Tictacboard, player symbol.Symbol, opponent symbol.Symbol) int {
 	for row := 0; row < 3; row++ {
-		if board.grid[row][0].GetValue().Get() == board.grid[row][1].GetValue().Get() && board.grid[row][1].GetValue() == board.grid[row][2].GetValue() {
-			if board.grid[row][0].GetValue().Get() == player.Get() {
+		if board.grid[row][0].GetValue() == board.grid[row][1].GetValue() && board.grid[row][1].GetValue() == board.grid[row][2].GetValue() {
+			if board.grid[row][0].GetValue() == player {
 				return +10
-			} else if board.grid[row][0].GetValue().Get() == opponent.Get() {
+			} else if board.grid[row][0].GetValue() == opponent {
 				return -10
 			}
 		}
 	}
 
 	for col := 0; col < 3; col++ {
-		if board.grid[0][col].GetValue().Get() == board.grid[1][col].GetValue().Get() && board.grid[1][col].GetValue().Get() == board.grid[2][col].GetValue().Get() {
-			if board.grid[0][col].GetValue().Get() == player.Get() {
+		if board.grid[0][col].GetValue() == board.grid[1][col].GetValue() && board.grid[1][col].GetValue() == board.grid[2][col].GetValue() {
+			if board.grid[0][col].GetValue() == player {
 				return +10
-			} else if board.grid[0][col].GetValue().Get() == opponent.Get() {
+			} else if board.grid[0][col].GetValue() == opponent {
 				return -10
 			}
 		}
 	}
 
-	if board.grid[0][0].GetValue().Get() == board.grid[1][1].GetValue().Get() && board.grid[1][1].GetValue().Get() == board.grid[2][2].GetValue().Get() {
-		if board.grid[0][0].GetValue().Get() == player.Get() {
+	if board.grid[0][0].GetValue() == board.grid[1][1].GetValue() && board.grid[1][1].GetValue() == board.grid[2][2].GetValue() {
+		if board.grid[0][0].GetValue() == player {
 			return +10
-		} else if board.grid[0][0].GetValue().Get() == opponent.Get() {
+		} else if board.grid[0][0].GetValue() == opponent {
 			return -10
 		}
 	}
 
-	if board.grid[0][2].GetValue().Get() == board.grid[1][1].GetValue().Get() && board.grid[1][1].GetValue().Get() == board.grid[2][0].GetValue().Get() {
-		if board.grid[0][2].GetValue().Get() == player.Get() {
+	if board.grid[0][2].GetValue() == board.grid[1][1].GetValue() && board.grid[1][1].GetValue() == board.grid[2][0].GetValue() {
+		if board.grid[0][2].GetValue() == player {
 			return +10
-		} else if board.grid[0][2].GetValue().Get() == opponent.Get() {
+		} else if board.grid[0][2].GetValue() == opponent {
 			return -10
 		}
 	}
@@ -166,7 +164,7 @@ func evaluate(board *Tictacboard, player symbol.Symbol, opponent symbol.Symbol) 
 }
 
 func minimax(board *Tictacboard, depth int, isMax bool, player symbol.Symbol, opponent symbol.Symbol) int {
-	score := evaluate(board, player, opponent)
+	score := evaluateGrid(board, player, opponent)
 
 	if score == 10 {
 		return score
@@ -227,7 +225,7 @@ func minimax(board *Tictacboard, depth int, isMax bool, player symbol.Symbol, op
 
 func (board *Tictacboard) updateStatus(r int, c int, s symbol.Symbol) {
 	for i := 0; i < columns; i++ {
-		if (i != c) && board.grid[r][i].GetValue().Get() != s.Get() {
+		if (i != c) && board.grid[r][i].GetValue() != s {
 			break
 		}
 		if i == columns-1 {
@@ -237,7 +235,7 @@ func (board *Tictacboard) updateStatus(r int, c int, s symbol.Symbol) {
 	}
 
 	for i := 0; i < rows; i++ {
-		if (i != r) && board.grid[i][c].GetValue().Get() != s.Get() {
+		if (i != r) && board.grid[i][c].GetValue() != s {
 			break
 		}
 		if i == rows-1 {
@@ -248,7 +246,7 @@ func (board *Tictacboard) updateStatus(r int, c int, s symbol.Symbol) {
 
 	if r == c {
 		for i := 0; i < rows; i++ {
-			if (i != r) && board.grid[i][i].GetValue().Get() != s.Get() {
+			if (i != r) && board.grid[i][i].GetValue() != s {
 				break
 			}
 			if i == rows-1 {
@@ -260,7 +258,7 @@ func (board *Tictacboard) updateStatus(r int, c int, s symbol.Symbol) {
 
 	if r+c == rows-1 {
 		for i := 0; i < rows; i++ {
-			if (i != r) && board.grid[i][(rows-i)-1].GetValue().Get() != s.Get() {
+			if (i != r) && board.grid[i][(rows-i)-1].GetValue() != s {
 				break
 			}
 			if i == rows-1 {
