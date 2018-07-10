@@ -4,18 +4,18 @@ import (
 	"github.com/zlav/tictacgo/symbol"
 )
 
-const defaultSymbol = " "
+const DefaultState = " "
 
 type Cell struct {
 	value symbol.Symbol
 }
 
 func NewCell() Cell {
-	return Cell{value: symbol.NewSymbol(defaultSymbol)}
+	return Cell{value: symbol.NewSymbol(DefaultState)}
 }
 
 func (c *Cell) Set(newSym symbol.Symbol) bool {
-	if c.value.Get() != defaultSymbol {
+	if c.value.Get() != DefaultState {
 		return false
 	}
 	c.value.Set(newSym.Get())
@@ -27,12 +27,12 @@ func (c Cell) GetValue() symbol.Symbol {
 }
 
 func (c Cell) IsSet() bool {
-	if c.value.Get() == defaultSymbol {
+	if c.value.Get() == DefaultState {
 		return false
 	}
 	return true
 }
 
 func (c *Cell) Reset() {
-	c.value.Set(defaultSymbol)
+	c.value.Set(DefaultState)
 }
