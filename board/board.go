@@ -42,7 +42,7 @@ func (board Tictacboard) PrintBoard() {
 }
 
 func (board Tictacboard) PrintHelp() {
-	count := 0
+	count := 1
 	for i := 0; i < rows; i++ {
 		for j := 0; j < columns; j++ {
 			fmt.Printf("|%d", count)
@@ -71,6 +71,12 @@ func (board *Tictacboard) Play(location int, s symbol.Symbol) bool {
 	board.moves += 1
 	board.updateStatus(r, c, s)
 	return newPlay
+}
+
+func (board Tictacboard) GetCellValue(location int) symbol.Symbol {
+	r := (location - 1) / 3
+	c := (location - 1) % 3
+	return board.grid[r][c].GetValue()
 }
 
 func (board Tictacboard) IsWon() bool {
