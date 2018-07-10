@@ -1,10 +1,11 @@
-package tictacgo
+package main
 
 import (
 	"fmt"
 
 	"github.com/zlav/tictacgo/board"
 	"github.com/zlav/tictacgo/player"
+	"github.com/zlav/tictacgo/symbol"
 )
 
 func main() {
@@ -13,17 +14,19 @@ func main() {
 	var players []player.Player
 	setup := false
 	fmt.Printf("How would you like to play? 1 player, 2 player, or watch the computer fight itself?\n")
+	xSym := symbol.NewSymbol("X")
+	oSym := symbol.NewSymbol("O")
 	for !setup {
 		setup = true
 		input := ""
 		fmt.Scanf("%s", &input)
 		switch input[0] {
 		case '1':
-			players = []player.Player{player.NewHuman("X"), player.NewComputer("O")}
+			players = []player.Player{player.NewHuman(xSym), player.NewComputer(oSym)}
 		case '2':
-			players = []player.Player{player.NewHuman("X"), player.NewHuman("O")}
+			players = []player.Player{player.NewHuman(xSym), player.NewHuman(oSym)}
 		case 'c', 'C':
-			players = []player.Player{player.NewComputer("X"), player.NewComputer("O")}
+			players = []player.Player{player.NewComputer(xSym), player.NewComputer(oSym)}
 		default:
 			fmt.Printf("Invalid Input\n")
 			setup = false

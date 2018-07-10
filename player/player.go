@@ -24,16 +24,18 @@ type computer struct {
 	icon symbol.Symbol
 }
 
-func NewHuman(icon string) Player {
+func NewHuman(newSym symbol.Symbol) Player {
 	return human{
 		name: "Player",
-		icon: symbol.NewSymbol(icon)}
+		icon: newSym,
+	}
 }
 
-func NewComputer(icon string) Player {
+func NewComputer(newSym symbol.Symbol) Player {
 	return computer{
 		name: "Player",
-		icon: symbol.NewSymbol(icon)}
+		icon: newSym,
+	}
 }
 
 func (h human) PlayTicTacToe(board *board.Tictacboard) {
