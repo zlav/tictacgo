@@ -35,7 +35,7 @@ From here you have a few options
 4. Move to your local /bin directory to run from anywhere
 
 ## Next Development Steps
-1. Build out a full test suite
+1. Build out more integration level tests and test user input
 2. Add a better graphical interface
 3. Drive out better features 
   * Take advantage of symbol package more

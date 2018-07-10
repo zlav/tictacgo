@@ -38,7 +38,7 @@ var _ = Describe("Player", func() {
 		})
 
 		It("returns the correct default name", func() {
-			Expect(computerTest.GetName()).To(Equal("Player"))
+			Expect(computerTest.GetName()).To(Equal("Computer"))
 		})
 
 		It("plays correctly", func() {
