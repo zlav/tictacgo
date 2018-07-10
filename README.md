@@ -24,6 +24,8 @@ Run the following command and all tests will run, including the other packages
 If you want to only run only local test files simply enter
 `ginkgo`
 
+Note: tictacgo.go is a driver for the other packages and user input so there is limited test coverage here
+
 ## Run the application
 Navigate to $GOPATH/src/github.com/zlav/tictacgo
 From here you have a few options
