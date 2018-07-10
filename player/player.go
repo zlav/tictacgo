@@ -39,7 +39,7 @@ func NewComputer(newSym symbol.Symbol) Player {
 }
 
 func (h human) PlayTicTacToe(board *board.Tictacboard) {
-	fmt.Printf("Player %s's turn\n", h.icon.Get())
+	fmt.Printf("%s %s's turn\n", h.name, h.icon.Get())
 	validPlay := false
 	for !validPlay {
 		var input int
@@ -49,7 +49,7 @@ func (h human) PlayTicTacToe(board *board.Tictacboard) {
 }
 
 func (c computer) PlayTicTacToe(board *board.Tictacboard) {
-	fmt.Println("Computers Turn")
+	fmt.Printf("%s's Turn\n", c.name)
 	time.Sleep(500 * time.Millisecond)
 	board.Play(board.BestPlay(c.icon), c.icon)
 }
