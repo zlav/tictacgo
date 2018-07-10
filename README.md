@@ -6,9 +6,23 @@ This repo contains a tic tac toe application built using golang that features an
 Ensure that you have properly installed go onto your computer following the guidelines from https://golang.org/doc/code.html
 
 ### Install the repo
-From anywhere on your command line run 
+From anywhere on your command line inside the $GOPATH 
 `go get github.com/zlav/tictacgo`
 This will place all of the packages inside of your go workspace under the src folder
+
+## Test the application
+### Install packages
+From anywhere on your command line run inside the $GOPATH
+`go get github.com/onsi/ginkgo/ginkgo`
+`go get github.com/onsi/gomega/...`
+This will download the necessary testing framework and assertion library
+
+### Run the tests
+Navigate to $GOPATH/src/github.com/zlav/tictacgo
+Run the following command and all tests will run, including the other packages
+`ginkgo -r` (-r for recursive)
+If you want to only run only local test files simply enter
+`ginkgo`
 
 ## Run the application
 Navigate to $GOPATH/src/github.com/zlav/tictacgo
