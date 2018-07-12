@@ -33,7 +33,7 @@ func NewHuman(newSym symbol.Symbol) Player {
 
 func NewComputer(newSym symbol.Symbol) Player {
 	return computer{
-		name: "Player",
+		name: "Computer",
 		icon: newSym,
 	}
 }
