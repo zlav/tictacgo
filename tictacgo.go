@@ -13,7 +13,7 @@ func main() {
 
 	var players []player.Player
 	setup := false
-	fmt.Printf("How would you like to play? 1 player, 2 player, or watch the computer fight itself?\n")
+	fmt.Printf("How would you like to play? [1] player, []2 player, or watch the [C]omputer fight itself?\n")
 	xSym := symbol.NewSymbol("X")
 	oSym := symbol.NewSymbol("O")
 	for !setup {
@@ -25,7 +25,7 @@ func main() {
 			players = []player.Player{player.NewHuman(xSym), player.NewComputer(oSym)}
 		case '2':
 			players = []player.Player{player.NewHuman(xSym), player.NewHuman(oSym)}
-		case 'c', 'C':
+		case 'c', 'C', '3':
 			players = []player.Player{player.NewComputer(xSym), player.NewComputer(oSym)}
 		default:
 			fmt.Printf("Invalid Input\n")
