@@ -4,49 +4,34 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	"github.com/zlav/tictacgo/board"
 	"github.com/zlav/tictacgo/player"
 	"github.com/zlav/tictacgo/symbol"
 )
 
 var _ = Describe("Player", func() {
-	humanIcon := symbol.NewSymbol("X")
-	computerIcon := symbol.NewSymbol("O")
-	gameBoard := board.NewGame(humanIcon, computerIcon)
+	testIcon := symbol.NewSymbol("X")
 
-	AfterEach(func() {
-		gameBoard.Reset()
-	})
-
-	Context("human player is created", func() {
-		humanTest := player.NewHuman(humanIcon)
+	Context("non computer player is created", func() {
+		playerTest := player.NewPlayer(testIcon, "Player 1", false)
 
 		It("initializes with the correct icon passed", func() {
-			Expect(humanTest.GetIcon()).To(Equal(humanIcon))
+			Expect(playerTest.GetIcon()).To(Equal(testIcon))
 		})
 
 		It("returns the correct default name", func() {
-			Expect(humanTest.GetName()).To(Equal("Player"))
+			Expect(playerTest.GetName()).To(Equal("Player 1"))
+		})
+
+		It("returns the correct computer setting", func() {
+			Expect(playerTest.IsComputer()).To(Equal(false))
 		})
 	})
 
 	Context("computer player is created", func() {
-		computerTest := player.NewComputer(computerIcon)
+		playerTest := player.NewPlayer(testIcon, "Player 1", true)
 
-		It("initializes with the correct icon passed", func() {
-			Expect(computerTest.GetIcon()).To(Equal(computerIcon))
-		})
-
-		It("returns the correct default name", func() {
-			Expect(computerTest.GetName()).To(Equal("Computer"))
-		})
-
-		It("plays correctly", func() {
-			gameBoard.Play(1, humanIcon)
-			gameBoard.Play(3, computerIcon)
-			gameBoard.Play(5, humanIcon)
-			computerTest.PlayTicTacToe(gameBoard)
-			Expect(gameBoard.GetCellValue(9)).To(Equal(computerIcon))
+		It("returns the correct computer setting", func() {
+			Expect(playerTest.IsComputer()).To(Equal(true))
 		})
 	})
 })

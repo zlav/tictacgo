@@ -41,3 +41,4 @@ From here you have a few options
   * Take advantage of symbol package more
   * Offer better player customization
 4. Push board and cell to their limits by adding an entirely different game such as checkers
+5. Improve print statements to be string return values so the client controls the print functionality
