@@ -51,7 +51,7 @@ func userInputString() string {
 }
 
 func tutorial() bool {
-	fmt.Printf("Enable tutorial mode for a guided walkthrough how to place tokens? Y/N\n")
+	fmt.Printf("Enable tutorial mode for a guided walkthrough how to place tokens? Y/N:")
 	input := userInputString()
 	if input[0] == 'y' || input[0] == 'Y' {
 		return true
