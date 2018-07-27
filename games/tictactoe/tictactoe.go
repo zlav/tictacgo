@@ -33,9 +33,8 @@ func NewTicTacToe() *Tictactoegame {
 }
 
 func (d Tictactoegame) TurnOn() string {
-	response := "Welcome to Tic Tac Go\nHow would you like to play? [1] 1 player, [2] 2 player, or watch the [3] Computer fight itself? "
 	d.board.Reset()
-	return response
+	return "Welcome to Tic Tac Go\nHow would you like to play? [1] 1 player, [2] 2 player, or watch the [3] Computer fight itself? "
 }
 
 func (d *Tictactoegame) Setup(gameMode string) (bool, string) {

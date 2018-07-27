@@ -25,7 +25,7 @@ func (c *tictacclient) setup() {
 	fmt.Print(c.server.TurnOn())
 
 	setup := false
-	output := ""
+	var output string
 	for !setup {
 		setup, output = c.server.SetupGame(userInputString())
 		fmt.Print(output)
@@ -60,10 +60,7 @@ func (c *tictacclient) playGame(tutorial bool) {
 			}
 		}
 
-		if tutorial {
-			fmt.Print(c.server.PrintHelp())
-		}
-		fmt.Print(c.server.PrintGame())
+		printBoard(c, tutorial)
 	}
 }
 
@@ -71,6 +68,13 @@ func userInputString() string {
 	input := ""
 	fmt.Scanf("%s", &input)
 	return input
+}
+
+func printBoard(c *tictacclient, tutorial bool) {
+	if tutorial {
+		fmt.Print(c.server.PrintHelp())
+	}
+	fmt.Print(c.server.PrintGame())
 }
 
 func tutorial() bool {
