@@ -1,16 +1,14 @@
 package director
 
-import (
-	"github.com/zlav/tictacgo/games"
-)
+import "github.com/zlav/tictacgo/games/tictactoe"
 
 type Director struct {
-	game games.Tictactoegame
+	game tictactoe.Tictactoegame
 }
 
 func NewDirector() *Director {
 	return &Director{
-		game: *games.NewTicTacToe(),
+		game: *tictactoe.NewTicTacToe(),
 	}
 }
 

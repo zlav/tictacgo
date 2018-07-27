@@ -1,12 +1,14 @@
-package games_test
+package tictactoe_test
 
-import "github.com/zlav/tictacgo/games"
-import . "github.com/onsi/ginkgo"
-import . "github.com/onsi/gomega"
+import (
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
+	"github.com/zlav/tictacgo/games/tictactoe"
+)
 
 var _ = Describe("Director", func() {
 	Context("new player vs computer tictactoe game board created", func() {
-		testGame := games.NewTicTacToe()
+		testGame := tictactoe.NewTicTacToe()
 		testGame.TurnOn()
 		var expect bool
 
@@ -39,6 +41,7 @@ var _ = Describe("Director", func() {
 				Expect(expect).To(BeFalse())
 			})
 		})
+
 		Context("when the computer is playing", func() {
 			It("knows the best place to play", func() {
 				testGame.Reset()
@@ -53,7 +56,7 @@ var _ = Describe("Director", func() {
 	})
 
 	Context("new player vs player tictactoe game board created", func() {
-		testGame := games.NewTicTacToe()
+		testGame := tictactoe.NewTicTacToe()
 		testGame.Setup("2")
 		testGame.TurnOn()
 

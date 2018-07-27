@@ -1,4 +1,4 @@
-package games_test
+package tictactoe_test
 
 import (
 	"testing"
@@ -7,7 +7,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestGames(t *testing.T) {
+func TestTictactoe(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Games Suite")
+	RunSpecs(t, "Tictactoe Suite")
 }
