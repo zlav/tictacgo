@@ -56,33 +56,6 @@ func (d *Tictactoegame) Setup(gameMode string) (bool, string) {
 	return true, "Good Luck!\n\n"
 }
 
-func (d *Tictactoegame) Play(input string) (bool, string) {
-	location, err := integerValidation(input)
-	if err != "" {
-		return false, err
-	}
-
-	r := (location - 1) / rows
-	c := (location - 1) % columns
-	if !d.board.SetCell(r, c, d.players[d.currPlayer].GetIcon()) {
-		return false, "Incorrect input: Cell is already taken: "
-	}
-
-	d.checkWinner(r, c)
-
-	d.currPlayer++
-	if d.currPlayer >= maxPlayers {
-		d.currPlayer = 0
-	}
-
-	d.moves++
-	return true, ""
-}
-
-func (d Tictactoegame) PlayerTurn() bool {
-	return !d.players[d.currPlayer].IsComputer()
-}
-
 func (d *Tictactoegame) CurrentStatus() (bool, string) {
 	if d.IsWon() {
 		return true, "Congratulations to " + d.winner.GetName() + "\nWould you like to play again? Y/N: "
@@ -106,45 +79,38 @@ func (d *Tictactoegame) IsWon() bool {
 	return d.winner.GetIcon() != symbol.Symbol{}
 }
 
-func (d *Tictactoegame) PrintGame() string {
-	response := ""
-	for r := 0; r < rows; r++ {
-		for c := 0; c < columns; c++ {
-			response += fmt.Sprintf("|%s", d.board.GetCellValue(r, c).Get())
-		}
-		response += fmt.Sprint("|")
-		if r < 2 {
-			response += fmt.Sprintf("\n-------")
-		}
-		response += fmt.Sprintf("\n")
-	}
-	response += fmt.Sprintf("\n")
-	return response
-}
-
-func (d *Tictactoegame) PrintHelp() string {
-	response := fmt.Sprintf("Example: Select the numbered spot you wish to place your piece\n")
-	count := 1
-	for r := 0; r < rows; r++ {
-		for c := 0; c < columns; c++ {
-			response += fmt.Sprintf("|%d", count)
-			count++
-		}
-		response += fmt.Sprint("|")
-		if r < 2 {
-			response += fmt.Sprintf("\n-------")
-		}
-		response += "\n"
-	}
-	response += fmt.Sprintf("\n\n")
-	return response
-}
-
 func (d *Tictactoegame) Reset() {
 	d.winner = player.Player{}
 	d.moves = 0
 	d.currPlayer = 0
 	d.board.Reset()
+}
+
+func (d Tictactoegame) PlayerTurn() bool {
+	return !d.players[d.currPlayer].IsComputer()
+}
+
+func (d *Tictactoegame) Play(input string) (bool, string) {
+	location, err := integerValidation(input)
+	if err != "" {
+		return false, err
+	}
+
+	r := (location - 1) / rows
+	c := (location - 1) % columns
+	if !d.board.SetCell(r, c, d.players[d.currPlayer].GetIcon()) {
+		return false, "Incorrect input: Cell is already taken: "
+	}
+
+	d.checkWinner(r, c)
+
+	d.currPlayer++
+	if d.currPlayer >= maxPlayers {
+		d.currPlayer = 0
+	}
+
+	d.moves++
+	return true, ""
 }
 
 func integerValidation(input string) (int, string) {
@@ -154,7 +120,6 @@ func integerValidation(input string) (int, string) {
 	}
 	if location > rows*columns || location < 1 {
 		return location, fmt.Sprintf("Incorrect input: Please enter an Integer between 1 and %d: ", rows*columns)
-
 	}
 	return location, ""
 }

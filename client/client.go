@@ -15,6 +15,13 @@ func NewTicTacClient(server *director.Director) *tictacclient {
 }
 
 func (c *tictacclient) Run() {
+	c.setup()
+
+	for c.playRound() {
+	}
+}
+
+func (c *tictacclient) setup() {
 	fmt.Print(c.server.TurnOn())
 
 	setup := false
@@ -23,16 +30,18 @@ func (c *tictacclient) Run() {
 		setup, output = c.server.SetupGame(userInputString())
 		fmt.Print(output)
 	}
+}
 
-	connected := true
-	for connected {
-		fmt.Print(c.server.PrintHelp())
-		c.playGame(tutorial())
-		_, output := c.server.Status()
-		fmt.Print(output)
-		connected, output = c.server.Reset(userInputString())
-		fmt.Print(output)
-	}
+func (c *tictacclient) playRound() bool {
+	fmt.Print(c.server.PrintHelp())
+	c.playGame(tutorial())
+
+	_, output := c.server.Status()
+	fmt.Print(output)
+
+	replay, output := c.server.Reset(userInputString())
+	fmt.Print(output)
+	return replay
 }
 
 func (c *tictacclient) playGame(tutorial bool) {
@@ -41,6 +50,7 @@ func (c *tictacclient) playGame(tutorial bool) {
 	for !c.server.GameOver() {
 		status, output := c.server.Status()
 		fmt.Print(output)
+
 		if status {
 		} else if c.server.PlayerTurn() {
 			hasPlayed, output := c.server.Play(userInputString())

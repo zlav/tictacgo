@@ -15,8 +15,8 @@ func bestPlay(d *Tictactoegame, s symbol.Symbol) int {
 	}
 
 	for i := 0; i < rows*columns; i++ {
-		r := i / 3
-		c := i % 3
+		r := i / rows
+		c := i % columns
 		if !d.board.IsCellSet(r, c) {
 			d.board.SetCell(r, c, s)
 			d.moves++

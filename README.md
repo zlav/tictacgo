@@ -45,3 +45,4 @@ From here you have a few options
   * Take advantage of symbol package more
   * Offer better player customization
 4. Push board and cell to their limits by adding an entirely different game such as checkers
+5. Handle the sleep functionality for computer moves on the server side
