@@ -8,9 +8,11 @@ var _ = Describe("Director", func() {
 	Context("new player vs computer tictactoe game board created", func() {
 		testGame := games.NewTicTacToe()
 		testGame.TurnOn()
+		var expect bool
 
 		It("can setup a new game", func() {
-			Expect(testGame.Setup("1")).To(BeTrue())
+			expect, _ = testGame.Setup("1")
+			Expect(expect).To(BeTrue())
 		})
 
 		Context("when playing pieces on the board", func() {
@@ -19,7 +21,8 @@ var _ = Describe("Director", func() {
 			})
 
 			It("can play a token on the board", func() {
-				Expect(testGame.Play("1")).To(BeTrue())
+				expect, _ = testGame.Play("1")
+				Expect(expect).To(BeTrue())
 			})
 
 			It("knows when it is not the players turn", func() {
@@ -27,19 +30,24 @@ var _ = Describe("Director", func() {
 			})
 
 			It("cannot play a token on the board where it has already been played", func() {
-				Expect(testGame.Play("1")).To(BeFalse())
+				expect, _ = testGame.Play("1")
+				Expect(expect).To(BeFalse())
 			})
 
 			It("cannot play a token on the board out of bounds", func() {
-				Expect(testGame.Play("-1")).To(BeFalse())
+				expect, _ = testGame.Play("-1")
+				Expect(expect).To(BeFalse())
 			})
 		})
 		Context("when the computer is playing", func() {
 			It("knows the best place to play", func() {
 				testGame.Reset()
-				Expect(testGame.Play("1")).To(BeTrue())
-				Expect(testGame.CurrentStatus()).To(BeTrue())
-				Expect(testGame.Play("5")).To(BeFalse())
+				expect, _ = testGame.Play("1")
+				Expect(expect).To(BeTrue())
+				expect, _ = testGame.CurrentStatus()
+				Expect(expect).To(BeTrue())
+				expect, _ = testGame.Play("5")
+				Expect(expect).To(BeFalse())
 			})
 		})
 	})

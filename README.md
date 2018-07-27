@@ -1,6 +1,10 @@
 # Tic-Tac-Go 
 This repo contains a tic tac toe application built using golang that features an unbeatable computer using the minimax algorithm 
 
+## Notes
+This is a server client implementation where the 'client' is in charge of sending 'requests' to the server. In this implementation the server and client are connected by functions and objects however the concept remains the same.
+The server sends 'responses' to the client which can be printed or ignored. This is setup to be able to turn into an HTTP response in an actual network client server implementation.
+
 ## Install the application
 ### Install Go
 Ensure that you have properly installed go onto your computer following the guidelines from https://golang.org/doc/code.html
@@ -41,4 +45,3 @@ From here you have a few options
   * Take advantage of symbol package more
   * Offer better player customization
 4. Push board and cell to their limits by adding an entirely different game such as checkers
-5. Improve print statements to be string return values so the client controls the print functionality

@@ -11,27 +11,33 @@ var _ = Describe("Director", func() {
 	Context("new tictactoe game created", func() {
 		game := director.NewDirector()
 		game.TurnOn()
+		var expect bool
 
 		It("can setup a new game", func() {
-			Expect(game.SetupGame("2")).To(BeTrue())
+			expect, _ = game.SetupGame("2")
+			Expect(expect).To(BeTrue())
 		})
 
 		Context("playing on the game", func() {
 			It("can place a token on the game", func() {
-				Expect(game.Play("1")).To(BeTrue())
+				expect, _ = game.Play("1")
+				Expect(expect).To(BeTrue())
 			})
 
 			It("returns false if the play is out of bounds", func() {
-				Expect(game.Play("-1")).To(BeFalse())
+				expect, _ = game.Play("-1")
+				Expect(expect).To(BeFalse())
 			})
 
 			It("returns false if the cell is set", func() {
-				Expect(game.Play("1")).To(BeFalse())
+				expect, _ = game.Play("1")
+				Expect(expect).To(BeFalse())
 			})
 
 			It("can reset the game", func() {
 				game.Reset("Y")
-				Expect(game.Play("1")).To(BeTrue())
+				expect, _ = game.Play("1")
+				Expect(expect).To(BeTrue())
 			})
 
 			It("Can see a win", func() {
