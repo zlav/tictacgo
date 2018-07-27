@@ -32,13 +32,13 @@ func NewTicTacToe() *Tictactoegame {
 	}
 }
 
-func (d Tictactoegame) TurnOn() {
-	fmt.Printf("Welcome to Tic Tac Go\n")
-	fmt.Printf("How would you like to play? [1] 1 player, [2] 2 player, or watch the [3] Computer fight itself?\n")
+func (d Tictactoegame) TurnOn() string {
+	response := "Welcome to Tic Tac Go\nHow would you like to play? [1] 1 player, [2] 2 player, or watch the [3] Computer fight itself? "
 	d.board.Reset()
+	return response
 }
 
-func (d *Tictactoegame) Setup(gameMode string) bool {
+func (d *Tictactoegame) Setup(gameMode string) (bool, string) {
 
 	xSym := symbol.NewSymbol("X")
 	oSym := symbol.NewSymbol("O")
@@ -50,25 +50,22 @@ func (d *Tictactoegame) Setup(gameMode string) bool {
 	case "c", "C", "3":
 		d.players = [maxPlayers]player.Player{player.NewPlayer(xSym, "Computer 1", true), player.NewPlayer(oSym, "Computer 2", true)}
 	default:
-		fmt.Printf("Invalid Input: [1] 1 Player, [2] 2 Player, or [3] Computer\n")
-		return false
+		return false, "Invalid Input: [1] 1 Player, [2] 2 Player, or [3] Computer: "
 	}
 
-	fmt.Printf("Good Luck!\n\n")
-	return true
+	return true, "Good Luck!\n\n"
 }
 
-func (d *Tictactoegame) Play(input string) bool {
+func (d *Tictactoegame) Play(input string) (bool, string) {
 	location, err := integerValidation(input)
-	if !err {
-		return err
+	if err != "" {
+		return false, err
 	}
 
 	r := (location - 1) / rows
 	c := (location - 1) % columns
 	if !d.board.SetCell(r, c, d.players[d.currPlayer].GetIcon()) {
-		fmt.Printf("Incorrect input: Cell is already taken: ")
-		return false
+		return false, "Incorrect input: Cell is already taken: "
 	}
 
 	d.checkWinner(r, c)
@@ -79,29 +76,26 @@ func (d *Tictactoegame) Play(input string) bool {
 	}
 
 	d.moves++
-	return true
+	return true, ""
 }
 
 func (d Tictactoegame) PlayerTurn() bool {
 	return !d.players[d.currPlayer].IsComputer()
 }
 
-func (d *Tictactoegame) CurrentStatus() bool {
+func (d *Tictactoegame) CurrentStatus() (bool, string) {
 	if d.IsWon() {
-		fmt.Printf("Congratulations to %s\nWould you like to play again? Y/N: ", d.winner.GetName())
-		return true
+		return true, "Congratulations to " + d.winner.GetName() + "\nWould you like to play again? Y/N: "
 	} else if d.IsDraw() {
-		fmt.Printf("Draw! Nobody is a winner\nWould you like to play again? Y/N: ")
-		return true
+		return true, "Draw! Nobody is a winner\nWould you like to play again? Y/N: "
 	} else if d.players[d.currPlayer].IsComputer() {
-		fmt.Printf("%s's Turn\n", d.players[d.currPlayer].GetName())
+		response := fmt.Sprintf("%s's Turn\n", d.players[d.currPlayer].GetName())
 		time.Sleep(500 * time.Millisecond)
 		d.Play(strconv.Itoa(d.bestPlay(d.players[d.currPlayer].GetIcon())))
-		return true
+		return true, response
 	}
 
-	fmt.Printf("%s: ", d.players[d.currPlayer].GetName())
-	return false
+	return false, d.players[d.currPlayer].GetName() + ": "
 }
 
 func (d *Tictactoegame) IsDraw() bool {
@@ -112,36 +106,38 @@ func (d *Tictactoegame) IsWon() bool {
 	return d.winner.GetIcon() != symbol.Symbol{}
 }
 
-func (d *Tictactoegame) PrintGame() {
+func (d *Tictactoegame) PrintGame() string {
+	response := ""
 	for r := 0; r < rows; r++ {
 		for c := 0; c < columns; c++ {
-			fmt.Printf("|%s", d.board.GetCellValue(r, c).Get())
+			response += fmt.Sprintf("|%s", d.board.GetCellValue(r, c).Get())
 		}
-		fmt.Print("|")
+		response += fmt.Sprint("|")
 		if r < 2 {
-			fmt.Printf("\n-------")
+			response += fmt.Sprintf("\n-------")
 		}
-		fmt.Println()
+		response += fmt.Sprintf("\n")
 	}
-	fmt.Println()
+	response += fmt.Sprintf("\n")
+	return response
 }
 
-func (d *Tictactoegame) PrintHelp() {
-	fmt.Printf("Example: Select the numbered spot you wish to place your piece\n")
+func (d *Tictactoegame) PrintHelp() string {
+	response := fmt.Sprintf("Example: Select the numbered spot you wish to place your piece\n")
 	count := 1
 	for r := 0; r < rows; r++ {
 		for c := 0; c < columns; c++ {
-			fmt.Printf("|%d", count)
+			response += fmt.Sprintf("|%d", count)
 			count++
 		}
-		fmt.Print("|")
+		response += fmt.Sprint("|")
 		if r < 2 {
-			fmt.Printf("\n-------")
+			response += fmt.Sprintf("\n-------")
 		}
-		fmt.Println()
+		response += "\n"
 	}
-	fmt.Println()
-	fmt.Printf("\n")
+	response += fmt.Sprintf("\n\n")
+	return response
 }
 
 func (d *Tictactoegame) Reset() {
@@ -181,17 +177,16 @@ func (d *Tictactoegame) bestPlay(s symbol.Symbol) int {
 	return bestMove + 1
 }
 
-func integerValidation(input string) (int, bool) {
+func integerValidation(input string) (int, string) {
 	location, err := strconv.Atoi(input)
 	if err != nil {
-		fmt.Printf("Incorrect input: Please enter an Integer: ")
-		return location, false
+		return location, fmt.Sprintf("Incorrect input: Please enter an Integer: ")
 	}
 	if location > rows*columns || location < 1 {
-		fmt.Printf("Incorrect input: Please enter an Integer between 1 and %d: ", rows*columns)
-		return location, false
+		return location, fmt.Sprintf("Incorrect input: Please enter an Integer between 1 and %d: ", rows*columns)
+
 	}
-	return location, true
+	return location, ""
 }
 
 func (d *Tictactoegame) checkWinner(r, c int) {

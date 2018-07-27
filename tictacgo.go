@@ -7,8 +7,6 @@ import (
 
 func main() {
 	gameServer := director.NewDirector()
-	gameServer.TurnOn()
-
 	ticTacClient := client.NewTicTacClient(gameServer)
 	ticTacClient.Run()
 }

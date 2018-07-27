@@ -1,8 +1,6 @@
 package director
 
 import (
-	"fmt"
-
 	"github.com/zlav/tictacgo/games"
 )
 
@@ -16,15 +14,15 @@ func NewDirector() *Director {
 	}
 }
 
-func (d Director) TurnOn() {
-	d.game.TurnOn()
+func (d Director) TurnOn() string {
+	return d.game.TurnOn()
 }
 
-func (d *Director) SetupGame(input string) bool {
+func (d *Director) SetupGame(input string) (bool, string) {
 	return d.game.Setup(input)
 }
 
-func (d *Director) Play(input string) bool {
+func (d *Director) Play(input string) (bool, string) {
 	return d.game.Play(input)
 }
 
@@ -32,16 +30,16 @@ func (d *Director) PlayerTurn() bool {
 	return d.game.PlayerTurn()
 }
 
-func (d *Director) Status() bool {
+func (d *Director) Status() (bool, string) {
 	return d.game.CurrentStatus()
 }
 
-func (d *Director) PrintGame() {
-	d.game.PrintGame()
+func (d *Director) PrintGame() string {
+	return d.game.PrintGame()
 }
 
-func (d *Director) PrintHelp() {
-	d.game.PrintHelp()
+func (d *Director) PrintHelp() string {
+	return d.game.PrintHelp()
 }
 
 func (d Director) GameOver() bool {
@@ -51,11 +49,10 @@ func (d Director) GameOver() bool {
 	return false
 }
 
-func (d *Director) Reset(input string) bool {
+func (d *Director) Reset(input string) (bool, string) {
 	if input[0] == 'y' || input[0] == 'Y' {
 		d.game.Reset()
-		return true
+		return true, ""
 	}
-	fmt.Printf("Thank you for playing!\n")
-	return false
+	return false, "Thank you for playing!\n"
 }

@@ -15,32 +15,45 @@ func NewTicTacClient(server *director.Director) *tictacclient {
 }
 
 func (c *tictacclient) Run() {
-	for !c.server.SetupGame(userInputString()) {
+	fmt.Print(c.server.TurnOn())
+
+	setup := false
+	output := ""
+	for !setup {
+		setup, output = c.server.SetupGame(userInputString())
+		fmt.Print(output)
 	}
 
 	connected := true
 	for connected {
-		c.server.PrintHelp()
+		fmt.Print(c.server.PrintHelp())
 		c.playGame(tutorial())
-		c.server.Status()
-		connected = c.server.Reset(userInputString())
+		_, output := c.server.Status()
+		fmt.Print(output)
+		connected, output = c.server.Reset(userInputString())
+		fmt.Print(output)
 	}
 }
 
 func (c *tictacclient) playGame(tutorial bool) {
-	c.server.PrintGame()
+	fmt.Print(c.server.PrintGame())
 
 	for !c.server.GameOver() {
-		if c.server.Status() {
+		status, output := c.server.Status()
+		fmt.Print(output)
+		if status {
 		} else if c.server.PlayerTurn() {
-			for !c.server.Play(userInputString()) {
+			hasPlayed, output := c.server.Play(userInputString())
+			for !hasPlayed {
+				fmt.Print(output)
+				hasPlayed, output = c.server.Play(userInputString())
 			}
 		}
 
 		if tutorial {
-			c.server.PrintHelp()
+			fmt.Print(c.server.PrintHelp())
 		}
-		c.server.PrintGame()
+		fmt.Print(c.server.PrintGame())
 	}
 }
 
@@ -51,7 +64,7 @@ func userInputString() string {
 }
 
 func tutorial() bool {
-	fmt.Printf("Enable tutorial mode for a guided walkthrough how to place tokens? Y/N:")
+	fmt.Printf("Enable tutorial mode for a guided walkthrough how to place tokens? Y/N: ")
 	input := userInputString()
 	if input[0] == 'y' || input[0] == 'Y' {
 		return true
